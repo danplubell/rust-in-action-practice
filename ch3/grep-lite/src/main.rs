@@ -45,8 +45,11 @@ What do we seek through millions of pages?"; // <1>
     let input = args.value_of("input").unwrap_or("-");
     if input == "-" {
         let stdin = io::stdin();
-        
+        let reader = stdin.lock();
+        process_lines(reader,re);
+    } else {
+        let f = File::open(input).unwrap();
+        let reader = BufReader::new(f);
+        process_lines(reader,re);
     }
-    let f = File::open(input).unwrap();
-    let reader = BufReader::new(f);
 }
